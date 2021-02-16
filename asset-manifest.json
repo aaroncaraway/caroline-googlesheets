@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/static/js/main.1275d9c2.chunk.js",
-    "main.js.map": "/static/js/main.1275d9c2.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.d395d93f.js",
-    "runtime-main.js.map": "/static/js/runtime-main.d395d93f.js.map",
-    "static/js/2.70a764c8.chunk.js": "/static/js/2.70a764c8.chunk.js",
-    "static/js/2.70a764c8.chunk.js.map": "/static/js/2.70a764c8.chunk.js.map",
-    "static/js/3.96f5f81c.chunk.js": "/static/js/3.96f5f81c.chunk.js",
-    "static/js/3.96f5f81c.chunk.js.map": "/static/js/3.96f5f81c.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.8c8b27cf.chunk.css.map": "/static/css/main.8c8b27cf.chunk.css.map",
-    "static/js/2.70a764c8.chunk.js.LICENSE.txt": "/static/js/2.70a764c8.chunk.js.LICENSE.txt"
+    "main.css": "/caroline-googlesheets/static/css/main.8c8b27cf.chunk.css",
+    "main.js": "/caroline-googlesheets/static/js/main.1275d9c2.chunk.js",
+    "main.js.map": "/caroline-googlesheets/static/js/main.1275d9c2.chunk.js.map",
+    "runtime-main.js": "/caroline-googlesheets/static/js/runtime-main.5db4223e.js",
+    "runtime-main.js.map": "/caroline-googlesheets/static/js/runtime-main.5db4223e.js.map",
+    "static/js/2.70a764c8.chunk.js": "/caroline-googlesheets/static/js/2.70a764c8.chunk.js",
+    "static/js/2.70a764c8.chunk.js.map": "/caroline-googlesheets/static/js/2.70a764c8.chunk.js.map",
+    "static/js/3.96f5f81c.chunk.js": "/caroline-googlesheets/static/js/3.96f5f81c.chunk.js",
+    "static/js/3.96f5f81c.chunk.js.map": "/caroline-googlesheets/static/js/3.96f5f81c.chunk.js.map",
+    "index.html": "/caroline-googlesheets/index.html",
+    "static/css/main.8c8b27cf.chunk.css.map": "/caroline-googlesheets/static/css/main.8c8b27cf.chunk.css.map",
+    "static/js/2.70a764c8.chunk.js.LICENSE.txt": "/caroline-googlesheets/static/js/2.70a764c8.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.d395d93f.js",
+    "static/js/runtime-main.5db4223e.js",
     "static/js/2.70a764c8.chunk.js",
     "static/css/main.8c8b27cf.chunk.css",
     "static/js/main.1275d9c2.chunk.js"
