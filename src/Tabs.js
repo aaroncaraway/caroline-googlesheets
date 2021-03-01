@@ -57,12 +57,10 @@ export default function SimpleTabs() {
   const [classData, setClassData] = useState();
   const [videoData, setVideoData] = useState();
   const [aboutData, setAboutData] = useState();
-  const [sheet, setSheet] = useState(1);
-  // const [aboutPhoto, setAboutPhoto] = useState();
+
   let aboutPhoto = '';
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    setSheet(newValue + 1);
   };
 
   useEffect(() => {
@@ -72,9 +70,6 @@ export default function SimpleTabs() {
       const url =
         'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/1/public/values?alt=json';
       const result = await axios(url);
-      // console.log(result.data);
-      // console.log(result.data.feed.entry);
-
       setData(result.data.feed.entry);
       setClassData(result.data.feed.entry);
 
@@ -96,10 +91,6 @@ export default function SimpleTabs() {
       const aboutResults = await axios(aboutUrl);
       console.log(aboutResults);
       setAboutData(aboutResults.data.feed.entry);
-      // setAboutPhoto(aboutResults.data.feed.entry[1].content['$t']);
-      // console.log(aboutPhoto);
-
-      // setLoading(false);
     };
     fetchData();
   }, []);
@@ -139,10 +130,12 @@ export default function SimpleTabs() {
         {videoGallery}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {aboutData && <img src={aboutData[1].content['$t']} alt="caroline" />}
-        <>
-          {aboutData && aboutData.map((item) => <h3>{item.content['$t']}</h3>)}
-        </>
+        {aboutData && (
+          <>
+            <img src={aboutData[1].content['$t']} alt="caroline" />
+            <h3>{aboutData[3].content['$t']}</h3>
+          </>
+        )}
       </TabPanel>
     </div>
   );
