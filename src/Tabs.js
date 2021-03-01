@@ -58,16 +58,12 @@ export default function SimpleTabs() {
   const [videoData, setVideoData] = useState();
   const [aboutData, setAboutData] = useState();
   const [sheet, setSheet] = useState(1);
-  const [aboutPhoto, setAboutPhoto] = useState();
-
+  // const [aboutPhoto, setAboutPhoto] = useState();
+  let aboutPhoto = '';
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setSheet(newValue + 1);
   };
-
-  // const formatAboutData = () => {
-  //   aboutPhoto = aboutData[1].content['$t'];
-  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,13 +96,23 @@ export default function SimpleTabs() {
       const aboutResults = await axios(aboutUrl);
       console.log(aboutResults);
       setAboutData(aboutResults.data.feed.entry);
-      setAboutPhoto(aboutResults.data.feed.entry[1].content['$t']);
-      console.log(aboutPhoto);
-      // formatAboutData();
+      // setAboutPhoto(aboutResults.data.feed.entry[1].content['$t']);
+      // console.log(aboutPhoto);
+
       // setLoading(false);
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const formatAboutData = () => {
+      if (aboutData) {
+        aboutPhoto = aboutData[1].content['$t'];
+        console.log('running NOW', aboutData[1].content['$t']);
+      }
+    };
+    formatAboutData();
+  }, [aboutData]);
 
   const videoGallery = useMemo(() => <VideoGallery videoData={videoData} />, [
     videoData,
@@ -133,7 +139,7 @@ export default function SimpleTabs() {
         {videoGallery}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <>{aboutPhoto && <img src={aboutPhoto} alt="Caroline" />}</>
+        {aboutData && <img src={aboutData[1].content['$t']} alt="caroline" />}
         <>
           {aboutData && aboutData.map((item) => <h3>{item.content['$t']}</h3>)}
         </>
