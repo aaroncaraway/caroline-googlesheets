@@ -14,7 +14,7 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
   const [videos, setVideos] = useState();
-  const [sheet, setSheet] = useState(2);
+  const [sheet, setSheet] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +34,20 @@ function Dashboard() {
     fetchData();
   }, []);
 
+  let dataToDisplay;
+
+  if (sheet === 1) {
+    dataToDisplay = (
+      <>{data && data.map((item) => <h3>{item.content['$t']}</h3>)}</>
+    );
+  } else {
+    dataToDisplay = (
+      <>
+        {videos &&
+          videos.map((video) => parse(`<div>${video.content['$t']}</div>`))}
+      </>
+    );
+  }
   return (
     <div className="dashboard">
       <AppBar position="static">Hello there</AppBar>
@@ -42,12 +56,7 @@ function Dashboard() {
           ...loading
         </Typography>
       ) : (
-        <>
-          {data && data.map((item) => <h3>{item.content['$t']}</h3>)}
-          {videos &&
-            videos.map((video) => parse(`<div>${video.content['$t']}</div>`))}
-          {/* <Gallery photos={data.photos} /> */}
-        </>
+        <>{dataToDisplay}</>
       )}
     </div>
   );
