@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import parse from 'html-react-parser';
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import VideoGallery from './VideoGallery';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,31 +54,65 @@ export default function SimpleTabs() {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [data, setData] = useState();
-  const [videos, setVideos] = useState();
+  const [classData, setClassData] = useState();
+  const [videoData, setVideoData] = useState();
+  const [aboutData, setAboutData] = useState();
   const [sheet, setSheet] = useState(1);
+  const [aboutPhoto, setAboutPhoto] = useState();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setSheet(newValue + 1);
   };
 
+  // const formatAboutData = () => {
+  //   aboutPhoto = aboutData[1].content['$t'];
+  // };
+
   useEffect(() => {
     const fetchData = async () => {
-      const url = `https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/${sheet}/public/values?alt=json`;
+      // ==============================
+      // SHEET 1: GETTING CLASS DATA
+      const url =
+        'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/1/public/values?alt=json';
       const result = await axios(url);
-      console.log(result.data);
-      console.log(result.data.feed.entry);
+      // console.log(result.data);
+      // console.log(result.data.feed.entry);
 
       setData(result.data.feed.entry);
-      setVideos(
-        result.data.feed.entry.filter((item) =>
+      setClassData(result.data.feed.entry);
+
+      // ==============================
+      // SHEET 2: GETTING VIDEO DATA
+      const videoUrl =
+        'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/2/public/values?alt=json';
+      const videoResults = await axios(videoUrl);
+      setVideoData(
+        videoResults.data.feed.entry.filter((item) =>
           item.content['$t'].includes('iframe') ? item.content['$t'] : ''
         )
       );
+
+      // ==============================
+      // SHEET 3: GETTING ABOUT DATA
+      const aboutUrl =
+        'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/3/public/values?alt=json';
+      const aboutResults = await axios(aboutUrl);
+      console.log(aboutResults);
+      setAboutData(aboutResults.data.feed.entry);
+      setAboutPhoto(aboutResults.data.feed.entry[1].content['$t']);
+      console.log(aboutPhoto);
+      // formatAboutData();
       // setLoading(false);
     };
     fetchData();
-  }, [sheet]);
+  }, []);
+
+  const videoGallery = useMemo(() => <VideoGallery videoData={videoData} />, [
+    videoData,
+  ]);
+
+  // const aboutPhoto = aboutData[1].content['$t'];
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -86,22 +121,22 @@ export default function SimpleTabs() {
           onChange={handleChange}
           aria-label="simple tabs example"
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          <Tab label="SCHEDULE" {...a11yProps(0)} />
+          <Tab label="VIDEOS" {...a11yProps(1)} />
+          <Tab label="ABOUT" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         <>{data && data.map((item) => <h3>{item.content['$t']}</h3>)}</>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <>
-          {videos &&
-            videos.map((video) => parse(`<div>${video.content['$t']}</div>`))}
-        </>
+        {videoGallery}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <>{aboutPhoto && <img src={aboutPhoto} alt="Caroline" />}</>
+        <>
+          {aboutData && aboutData.map((item) => <h3>{item.content['$t']}</h3>)}
+        </>
       </TabPanel>
     </div>
   );
