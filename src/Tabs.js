@@ -124,7 +124,7 @@ export default function SimpleTabs() {
           onChange={handleChange}
           aria-label="simple tabs example"
         >
-          <Tab label="SCHEDULE" {...a11yProps(0)} />
+          <Tab label="SCHEDULE!!" {...a11yProps(0)} />
           <Tab label="VIDEOS" {...a11yProps(1)} />
           <Tab label="ABOUT" {...a11yProps(2)} />
         </Tabs>
