@@ -68,8 +68,14 @@ export default function SimpleTabs() {
       // ==============================
       // SHEET 1: GETTING CLASS DATA
       const url =
-        'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/1/public/values?alt=json';
+        'https://sheets.googleapis.com/v4/spreadsheets/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/values/CLASSES?alt=json&key=AIzaSyCdrAjgFE56jXOaBJl6tWg7yJXgBEm65Us';
+      // 'https://sheets.googleapis.com/v4/spreadsheets/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/public/values/CLASSES'
+      // V4 https://sheets.googleapis.com/v4/spreadsheets/spreadsheetId/values/Sheet1
+      //  V3 https://spreadsheets.google.com/feeds/list/spreadsheetId/sheetId/private/full
+      // 'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/1/public/values?alt=json';
+
       const result = await axios(url);
+      console.log(result);
       setData(result.data.feed.entry);
       setClassData(result.data.feed.entry);
 
