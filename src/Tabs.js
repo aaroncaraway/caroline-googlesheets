@@ -75,28 +75,28 @@ export default function SimpleTabs() {
       // 'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/1/public/values?alt=json';
 
       const result = await axios(url);
-      console.log(result);
-      setData(result.data.feed.entry);
-      setClassData(result.data.feed.entry);
+      console.log('RESULT', result);
+      setData(result.data.values);
+      setClassData(result.data.values);
 
       // ==============================
       // SHEET 2: GETTING VIDEO DATA
-      const videoUrl =
-        'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/2/public/values?alt=json';
-      const videoResults = await axios(videoUrl);
-      setVideoData(
-        videoResults.data.feed.entry.filter((item) =>
-          item.content['$t'].includes('iframe') ? item.content['$t'] : ''
-        )
-      );
+      // const videoUrl =
+      //   'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/2/public/values?alt=json';
+      // const videoResults = await axios(videoUrl);
+      // setVideoData(
+      //   videoResults.data.feed.entry.filter((item) =>
+      //     item.content['$t'].includes('iframe') ? item.content['$t'] : ''
+      //   )
+      // );
 
       // ==============================
       // SHEET 3: GETTING ABOUT DATA
-      const aboutUrl =
-        'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/3/public/values?alt=json';
-      const aboutResults = await axios(aboutUrl);
-      console.log(aboutResults);
-      setAboutData(aboutResults.data.feed.entry);
+      // const aboutUrl =
+      //   'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/3/public/values?alt=json';
+      // const aboutResults = await axios(aboutUrl);
+      // console.log(aboutResults);
+      // setAboutData(aboutResults.data.feed.entry);
     };
     fetchData();
   }, []);
@@ -130,19 +130,24 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <>{data && data.map((item) => <h3>{item.content['$t']}</h3>)}</>
+        <>{data && data.map((item) => <h3>{item} + hello</h3>)}</>
+        {/* <>{data && data.map((item) => <h3>{item.content['$t']}</h3>)}</> */}
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      {/* <TabPanel value={value} index={1}>
         {videoGallery}
-      </TabPanel>
+      </TabPanel> */}
       <TabPanel value={value} index={2}>
+        <>{data && data.map((item) => <h3>{item}</h3>)}</>
+        {/* <>{data && data.map((item) => <h3>{item.content['$t']}</h3>)}</> */}
+      </TabPanel>
+      {/* <TabPanel value={value} index={2}>
         {aboutData && (
           <>
             <img src={aboutData[1].content['$t']} alt="caroline" />
             <h3>{aboutData[3].content['$t']}</h3>
           </>
         )}
-      </TabPanel>
+      </TabPanel> */}
     </div>
   );
 }
