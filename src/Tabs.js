@@ -62,45 +62,56 @@ export default function SimpleTabs() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const fetchData = async () => {
+    // ==============================
+    // SHEET 1: GETTING CLASS DATA
+    const url =
+      'https://sheets.googleapis.com/v4/spreadsheets/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/values/Form+Responses+1?alt=json&key=AIzaSyCdrAjgFE56jXOaBJl6tWg7yJXgBEm65Us';
+    // 'https://sheets.googleapis.com/v4/spreadsheets/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/values/CLASSES?alt=json&key=AIzaSyCdrAjgFE56jXOaBJl6tWg7yJXgBEm65Us';
+    // 'https://sheets.googleapis.com/v4/spreadsheets/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/public/values/CLASSES'
+    // V4 https://sheets.googleapis.com/v4/spreadsheets/spreadsheetId/values/Sheet1
+    //  V3 https://spreadsheets.google.com/feeds/list/spreadsheetId/sheetId/private/full
+    // 'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/1/public/values?alt=json';
+
+    const result = await axios(url);
+    console.log('RESULT', result);
+    const reversed_data = result.data.values.reverse();
+    setData(reversed_data);
+    setClassData(reversed_data);
+
+    // ==============================
+    // SHEET 2: GETTING VIDEO DATA
+    // const videoUrl =
+    //   'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/2/public/values?alt=json';
+    // const videoResults = await axios(videoUrl);
+    // setVideoData(
+    //   videoResults.data.feed.entry.filter((item) =>
+    //     item.content['$t'].includes('iframe') ? item.content['$t'] : ''
+    //   )
+    // );
+
+    // ==============================
+    // SHEET 3: GETTING ABOUT DATA
+    // const aboutUrl =
+    //   'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/3/public/values?alt=json';
+    // const aboutResults = await axios(aboutUrl);
+    // console.log(aboutResults);
+    // setAboutData(aboutResults.data.feed.entry);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      // ==============================
-      // SHEET 1: GETTING CLASS DATA
-      const url =
-        'https://sheets.googleapis.com/v4/spreadsheets/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/values/Form+Responses+1?alt=json&key=AIzaSyCdrAjgFE56jXOaBJl6tWg7yJXgBEm65Us';
-      // 'https://sheets.googleapis.com/v4/spreadsheets/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/values/CLASSES?alt=json&key=AIzaSyCdrAjgFE56jXOaBJl6tWg7yJXgBEm65Us';
-      // 'https://sheets.googleapis.com/v4/spreadsheets/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/public/values/CLASSES'
-      // V4 https://sheets.googleapis.com/v4/spreadsheets/spreadsheetId/values/Sheet1
-      //  V3 https://spreadsheets.google.com/feeds/list/spreadsheetId/sheetId/private/full
-      // 'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/1/public/values?alt=json';
-
-      const result = await axios(url);
-      console.log('RESULT', result);
-      const reversed_data = result.data.values.reverse();
-      setData(reversed_data);
-      setClassData(reversed_data);
-
-      // ==============================
-      // SHEET 2: GETTING VIDEO DATA
-      // const videoUrl =
-      //   'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/2/public/values?alt=json';
-      // const videoResults = await axios(videoUrl);
-      // setVideoData(
-      //   videoResults.data.feed.entry.filter((item) =>
-      //     item.content['$t'].includes('iframe') ? item.content['$t'] : ''
-      //   )
-      // );
-
-      // ==============================
-      // SHEET 3: GETTING ABOUT DATA
-      // const aboutUrl =
-      //   'https://spreadsheets.google.com/feeds/cells/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/3/public/values?alt=json';
-      // const aboutResults = await axios(aboutUrl);
-      // console.log(aboutResults);
-      // setAboutData(aboutResults.data.feed.entry);
-    };
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const checkEvery3Seconds = setInterval(() => {
+      fetchData();
+    }, 3000);
+
+    return () => {
+      // cleaning up
+      clearInterval(checkEvery3Seconds);
+    };
   }, []);
 
   useEffect(() => {
