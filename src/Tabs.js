@@ -68,7 +68,8 @@ export default function SimpleTabs() {
       // ==============================
       // SHEET 1: GETTING CLASS DATA
       const url =
-        'https://sheets.googleapis.com/v4/spreadsheets/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/values/CLASSES?alt=json&key=AIzaSyCdrAjgFE56jXOaBJl6tWg7yJXgBEm65Us';
+        'https://sheets.googleapis.com/v4/spreadsheets/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/values/Form+Responses+1?alt=json&key=AIzaSyCdrAjgFE56jXOaBJl6tWg7yJXgBEm65Us';
+      // 'https://sheets.googleapis.com/v4/spreadsheets/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/values/CLASSES?alt=json&key=AIzaSyCdrAjgFE56jXOaBJl6tWg7yJXgBEm65Us';
       // 'https://sheets.googleapis.com/v4/spreadsheets/1qmBlKnDlVFDJH3r3EOEB4bZiga6nIvIYOE1-5_MxNI4/public/values/CLASSES'
       // V4 https://sheets.googleapis.com/v4/spreadsheets/spreadsheetId/values/Sheet1
       //  V3 https://spreadsheets.google.com/feeds/list/spreadsheetId/sheetId/private/full
@@ -130,7 +131,7 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <>{data && data.map((item) => <h3>{item} + hello</h3>)}</>
+        <>{data && data.map((item) => <h3>{item}</h3>)}</>
         {/* <>{data && data.map((item) => <h3>{item.content['$t']}</h3>)}</> */}
       </TabPanel>
       {/* <TabPanel value={value} index={1}>
